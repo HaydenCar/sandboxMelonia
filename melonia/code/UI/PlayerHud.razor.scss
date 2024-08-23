@@ -1,0 +1,68 @@
+PlayerHud
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	font-family: Poppins;
+	font-size: 24px;
+
+	.vitals{
+		position: absolute;
+		top: 32px;
+		left: 32px;
+		text-stroke: 8px, black;
+		color: white;
+		flex-direction: column;
+	}
+
+	> .healthbars{
+		position: absolute;
+		bottom: 32px;
+		left: 32px;
+
+		> .healthbar{
+			width: 500px;
+			height: 64px;
+			background-color: rgb(27, 27, 27);
+			padding: 8px;
+
+			> .inner{
+				background-color: black;
+				flex-grow: 1;
+
+				> .fill{
+					height: 100%;
+					background-color: red;
+				}
+
+			}
+
+		}
+	}
+	
+	.hotbar{
+		position: absolute;
+		bottom: 32px;
+		width: 100%;
+		z-index: 1;
+		gap: 8px;
+		justify-content: center;
+		align-items: flex-end;
+
+		> .slot{
+			height: 92px;
+			width: 92px;
+			background-color: rgb(27, 27, 27);
+			border-radius: 16px;
+			transition: all 0.2s ease;
+
+			&.active{
+				background-color: rgb(73, 73, 73);
+				width: 108px;
+				height: 108px;
+			}
+		}
+	}
+}

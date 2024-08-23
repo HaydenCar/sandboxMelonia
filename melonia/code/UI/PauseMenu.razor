@@ -1,0 +1,44 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+
+<root class="@(IsPaused ? "" : "hide" )">
+	<h2>PAUSED</h2>
+	<div class = "options">
+		<div class="resumebutton" onclick=@onResume>
+			Resume
+		</div>
+		<div class="quitbutton" onclick=@onQuit>
+			Quit	
+		</div>
+	</div>
+</root>
+
+@code
+{
+
+	public bool IsPaused { get; set;} = false;
+
+	protected override void OnUpdate(){
+		base.OnUpdate();
+
+		if(Input.Pressed("Menu")){
+			IsPaused = !IsPaused;
+
+		}
+
+		Scene.TimeScale = IsPaused ? 0 : 1;
+	}
+
+	void onResume(){
+		IsPaused = false;
+	}
+
+	void onQuit(){
+		Game.Close();
+
+	}
+
+
+	protected override int BuildHash() => System.HashCode.Combine( IsPaused );
+}
