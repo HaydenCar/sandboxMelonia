@@ -59,7 +59,7 @@ public sealed class PlayerMovement : Component
 		// Set our sprinting and crouching states
         UpdateCrouch();
 		UpdateSlide();
-		UpdateRoll();
+		//UpdateRoll();
 		
         IsSprinting = Input.Down("Run");
 		if(Input.Pressed("Jump")) Jump();
@@ -167,10 +167,11 @@ public sealed class PlayerMovement : Component
         animationHelper.MoveStyle = CitizenAnimationHelper.MoveStyles.Run;
         animationHelper.DuckLevel = IsCrouching ? 1f : 0f;
 		
-		if(IsRolling){
-			animationHelper.Target.Set( "roll_forward", true );
-			animationHelper.SpecialMove = CitizenAnimationHelper.SpecialMoveStyle.Roll;
-		} else animationHelper.SpecialMove = CitizenAnimationHelper.SpecialMoveStyle.None;
+		//NOT IN USE RIGHT NOW TBA
+		//if(IsRolling){
+		//	animationHelper.Target.Set( "roll_forward", true );
+		//	animationHelper.SpecialMove = CitizenAnimationHelper.SpecialMoveStyle.Roll;
+		//} else animationHelper.SpecialMove = CitizenAnimationHelper.SpecialMoveStyle.None;
 
 		if(IsSliding){
 			animationHelper.SpecialMove = CitizenAnimationHelper.SpecialMoveStyle.Slide;
@@ -194,38 +195,36 @@ public sealed class PlayerMovement : Component
         }
     }
 
-	void UpdateRoll(){
-		if(!characterController.IsOnGround) return;
-		if(IsCrouching) return;
-
-        if(Input.Pressed("attack1"))
-        {
-			Log.Info("DO A BARREL ROLL");
-			animationHelper.Target.Set( "roll_forward", true );
-			IsRolling = true;
-        } else{
-			animationHelper.Target.Set( "roll_forward", true );
-			IsRolling = false;
-		  } 
-    }
+	//NOT IN USE RIGHT NOW TBA ALSO BAD CODE FIX
+	//void UpdateRoll(){
+	//	if(!characterController.IsOnGround) return;
+	//	if(IsCrouching) return;
+//
+    //    if(Input.Pressed("attack1"))
+    //    {
+	//		Log.Info("DO A BARREL ROLL");
+	//		animationHelper.Target.Set( "roll_forward", true );
+	//		IsRolling = true;
+    //    } else{
+	//		animationHelper.Target.Set( "roll_forward", true );
+	//		IsRolling = false;
+	//	  } 
+    //}
 
 	void UpdateSlide(){
-		if(!characterController.IsOnGround) return;
-		if(IsCrouching) return;
+		if(!characterController.IsOnGround || IsCrouching) return;
 
-        if(Input.Pressed("attack2")){
+		IsSliding = Input.Pressed("attack2");
+
+        if (IsSliding){
 			Log.Info("Slide in, slide in, Would you ride? Baby, would you ride with me?");
-			IsSliding = true;
-			characterController.Height /= 2f;
-
-			
-        } else{
-			IsSliding = false;
-		  } 
+			characterController.Height /= 2f;			
+        } 
 
 		if (Input.Released("attack2") && !IsSliding){
 			characterController.Height *= 2f;
 		}
+
     }
 
 }

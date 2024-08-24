@@ -42,7 +42,8 @@
           },
           "Health": 100,
           "Inventory": [
-            "Weapon_Pistol"
+            "Weapon_Pistol",
+            "Weapon_Rocket"
           ],
           "JumpForce": 400,
           "MaxForce": 50,
