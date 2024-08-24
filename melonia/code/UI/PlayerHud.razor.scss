@@ -15,6 +15,10 @@ PlayerHud
 		text-stroke: 8px, black;
 		color: white;
 		flex-direction: column;
+		background-color: rgb(71, 71, 71);
+		padding: 8px;
+		opacity: 100;
+		border-radius: 16px;
 	}
 
 	> .healthbars{

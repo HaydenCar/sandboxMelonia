@@ -1,0 +1,145 @@
+{
+  "RootObject": {
+    "__guid": "deb6fdfa-1eb8-4151-842c-b1462cd4e19a",
+    "Flags": 0,
+    "Name": "Player",
+    "Tags": "player,trigger",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Sandbox.CharacterController",
+        "__guid": "4b82ea21-f97b-490e-8cac-b068ea054901",
+        "Acceleration": 10,
+        "Bounciness": 0.3,
+        "GroundAngle": 45,
+        "Height": 64,
+        "IgnoreLayers": "player",
+        "Radius": 9.4,
+        "StepHeight": 18,
+        "UseCollisionRules": false
+      },
+      {
+        "__type": "PlayerMovement",
+        "__guid": "bb580e66-cecf-4079-8e24-2170ce8b1d23",
+        "AirControl": 0.1,
+        "Body": {
+          "_type": "gameobject",
+          "go": "db0542db-500e-49b9-9984-dff5ea46df20"
+        },
+        "CrouchSpeed": 90,
+        "GroundControl": 4,
+        "Head": {
+          "_type": "gameobject",
+          "go": "3aeb5a9c-66ce-45c1-8ce5-d2c4648afe6c"
+        },
+        "Health": 100,
+        "Inventory": [
+          "Weapon_Pistol"
+        ],
+        "JumpForce": 400,
+        "MaxForce": 50,
+        "MaxHealth": 100,
+        "RunSpeed": 290,
+        "Speed": 160,
+        "WalkSpeed": 90
+      },
+      {
+        "__type": "Sandbox.Citizen.CitizenAnimationHelper",
+        "__guid": "7ad78f26-0b6c-4855-94ee-0a1b04aa1189",
+        "BodyWeight": 1,
+        "EyeSource": {
+          "_type": "gameobject",
+          "go": "3aeb5a9c-66ce-45c1-8ce5-d2c4648afe6c"
+        },
+        "EyesWeight": 1,
+        "HeadWeight": 1,
+        "LookAtEnabled": false,
+        "Target": {
+          "_type": "component",
+          "component_id": "13c6c5b7-be39-4021-9642-369da2931330",
+          "go": "db0542db-500e-49b9-9984-dff5ea46df20",
+          "component_type": "SkinnedModelRenderer"
+        }
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "db0542db-500e-49b9-9984-dff5ea46df20",
+        "Flags": 0,
+        "Name": "Body",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.SkinnedModelRenderer",
+            "__guid": "13c6c5b7-be39-4021-9642-369da2931330",
+            "BodyGroups": 341,
+            "CreateBoneObjects": false,
+            "Model": "models/citizen/citizen.vmdl",
+            "RenderType": "On",
+            "Tint": "1,1,1,1",
+            "UseAnimGraph": true
+          }
+        ]
+      },
+      {
+        "__guid": "3aeb5a9c-66ce-45c1-8ce5-d2c4648afe6c",
+        "Flags": 0,
+        "Name": "Head",
+        "Position": "0,0,62.86909",
+        "Enabled": true
+      },
+      {
+        "__guid": "07c38c2d-7fd1-46fd-850d-31e7e5bd982c",
+        "Flags": 0,
+        "Name": "Camera",
+        "Position": "-67.13832,0,66.89317",
+        "Tags": "maincamera",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.CameraComponent",
+            "__guid": "f6c8dfaa-422a-4eb4-863a-d9cc88ae12e0",
+            "BackgroundColor": "0.33333,0.46275,0.52157,1",
+            "ClearFlags": "All",
+            "FieldOfView": 80,
+            "IsMainCamera": true,
+            "Orthographic": false,
+            "OrthographicHeight": 1204,
+            "Priority": 1,
+            "RenderExcludeTags": "",
+            "RenderTags": "",
+            "TargetEye": "None",
+            "Viewport": "0,0,1,1",
+            "ZFar": 10000,
+            "ZNear": 1
+          },
+          {
+            "__type": "CameraMovement",
+            "__guid": "c81cff2e-20d1-4620-88ac-9d3efe73f82a",
+            "Body": {
+              "_type": "gameobject",
+              "go": "db0542db-500e-49b9-9984-dff5ea46df20"
+            },
+            "Distance": 150,
+            "Head": {
+              "_type": "gameobject",
+              "go": "3aeb5a9c-66ce-45c1-8ce5-d2c4648afe6c"
+            },
+            "Player": {
+              "_type": "component",
+              "component_id": "bb580e66-cecf-4079-8e24-2170ce8b1d23",
+              "go": "deb6fdfa-1eb8-4151-842c-b1462cd4e19a",
+              "component_type": "PlayerMovement"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}
