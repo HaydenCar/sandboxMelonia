@@ -33,6 +33,7 @@ public sealed class CameraMovement : Component
 		// Set the current offset
         var targetOffset = Vector3.Zero;
         if(Player.IsCrouching) targetOffset += Vector3.Down * 32f;
+        if(Player.IsSliding) targetOffset += Vector3.Down * 32f;
         CurrentOffset = Vector3.Lerp(CurrentOffset, targetOffset, Time.Delta * 10f);
 
         // Set the position of the camera

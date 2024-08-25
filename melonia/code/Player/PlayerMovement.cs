@@ -34,7 +34,6 @@ public sealed class PlayerMovement : Component
     [Property] public GameObject Head { get; set; }
     [Property] public GameObject Body { get; set; }
 	[Property] public SkinnedModelRenderer BodyTarget { get; set; }
-
 	// Member Variables
 	
 	public Vector3 WishVelocity = Vector3.Zero;
@@ -50,6 +49,7 @@ public sealed class PlayerMovement : Component
 	protected override void OnStart(){
 		characterController = Components.Get<CharacterController>();
 		animationHelper = Components.Get<CitizenAnimationHelper>();
+
 		// FOR SOME REASON GAME WANNA BE NAKED
 		if (Components.TryGet<SkinnedModelRenderer>(out var model)) {
     		var clothing = ClothingContainer.CreateFromLocalUser();
@@ -62,15 +62,7 @@ public sealed class PlayerMovement : Component
 		// Set our sprinting and crouching states
         UpdateCrouch();
 		UpdateSlide();
-		//UpdateRoll();
-
-		if (IsSliding){
-			SlideTimer++;
-			if (SlideTimer > 200)
-			{
-				Input.ReleaseAction("attack2");
-			}
-		} else SlideTimer = 0;
+		//UpdateRoll();		
 		
         IsSprinting = Input.Down("Run");
 		if(Input.Pressed("Jump")) Jump();
@@ -202,6 +194,10 @@ public sealed class PlayerMovement : Component
         }
 
         if(Input.Released("Crouch") && IsCrouching){
+			var ctrace = characterController.TraceDirection( Vector3.Up * 32);
+
+			if (ctrace.Hit) return;
+
             IsCrouching = false;
             characterController.Height *= 1.5f; // Return the height of our character controller to normal
         }
@@ -233,9 +229,31 @@ public sealed class PlayerMovement : Component
         } 
 
 		if (Input.Released("attack2") && IsSliding){
+			var strace = characterController.TraceDirection( Vector3.Up * 32);
+
+			if (strace.Hit) {
+				Input.Released("attack2");
+				return;
+			}
+
 			IsSliding = false;
 			characterController.Height *= 2f;
 		}
+
+		SlideFix();
     }
+
+	// Stops player from unsliding when under objects
+	void SlideFix(){
+		if (IsSliding){
+			var hi = characterController.TraceDirection( Vector3.Up * 32);
+			SlideTimer++;
+			if (SlideTimer > 200 && !hi.Hit)
+			{
+				IsSliding = false;
+				characterController.Height *= 2f;
+			}
+		} else SlideTimer = 0;
+	}
 
 }
