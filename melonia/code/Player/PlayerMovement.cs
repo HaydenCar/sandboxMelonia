@@ -2,6 +2,7 @@ using Microsoft.VisualBasic;
 using Sandbox;
 using Sandbox.Citizen;
 
+
 public sealed class PlayerMovement : Component
 {
 	// Variables
@@ -30,6 +31,25 @@ public sealed class PlayerMovement : Component
 	[Property] public float SlideSpeed { get; set; } = 150f;
 	[Property] public float JumpForce { get; set; } = 400f;
 
+	// How much damage your punch deals
+	[Property]
+	[Category( "Stats" )]
+	[Range( 0f, 5f, 0.1f )]
+	public float PunchStrength { get; set; } = 1f;
+
+	// How many seconds before you can punch again
+	[Property]
+	[Category( "Stats" )]
+	[Range( 0f, 2f, 0.1f )]
+	public float PunchCooldown { get; set; } = 0.5f;
+
+	// How far away you can punch in Hammer Units
+	[Property]
+	[Category( "Stats" )]
+	[Range( 0f, 200f, 5f )]
+	public float PunchRange { get; set; } = 50f;
+
+
 	 // Object References
     [Property] public GameObject Head { get; set; }
     [Property] public GameObject Body { get; set; }
@@ -45,6 +65,18 @@ public sealed class PlayerMovement : Component
 	private CitizenAnimationHelper animationHelper;
 
 	int SlideTimer = 0;
+	TimeSince _lastPunch;
+
+	protected override void DrawGizmos()
+	{
+		if ( !Gizmo.IsSelected ) return;
+
+		var draw = Gizmo.Draw;
+
+		draw.LineSphere( Head.Transform.LocalPosition, 10f );
+		draw.LineCylinder(Head.Transform.LocalPosition, Head.Transform.LocalPosition + Head.Transform.LocalRotation.Forward * PunchRange, 5f, 5f, 10 );
+	}
+
 
 	protected override void OnStart(){
 		characterController = Components.Get<CharacterController>();
@@ -58,6 +90,7 @@ public sealed class PlayerMovement : Component
 		}
 	}
 
+
 	protected override void OnUpdate(){
 		// Set movement states
         UpdateCrouch();
@@ -65,10 +98,13 @@ public sealed class PlayerMovement : Component
 		//UpdateRoll();		
         UpdateSprint();
 		if(Input.Pressed("Jump")) Jump();
-
+		if ( Input.Pressed( "attack1" ) && _lastPunch >= PunchCooldown ) Punch();
+		if ( _lastPunch >= 2f ) animationHelper.HoldType = CitizenAnimationHelper.HoldTypes.None;
+		DrawGizmos();
 		GetActiveSlot();
 		RotateBody();
 		UpdateAnimation();
+
 	}
 
 	protected override void OnFixedUpdate(){
@@ -261,4 +297,30 @@ public sealed class PlayerMovement : Component
 		IsSprinting = Input.Down("Run");
 	}
 
+	public void Punch()
+	{
+
+		if ( animationHelper != null )
+		{
+			animationHelper.HoldType = CitizenAnimationHelper.HoldTypes.Punch;
+			animationHelper.Target.Set( "b_attack", true );
+		}
+
+		var punchTrace = Scene.Trace
+			.FromTo( Head.Transform.LocalPosition, Head.Transform.LocalPosition + Head.Transform.LocalRotation.Forward * PunchRange )
+			.Size( 10f )
+			.WithoutTags( "player" )
+			.IgnoreGameObjectHierarchy( GameObject )
+			.Run();
+
+		if ( punchTrace.Hit ){
+			Log.Info("WHY");
+			if ( punchTrace.GameObject.Components.TryGet<UnitInfo>( out var unitInfo ) ){
+				unitInfo.Damage( PunchStrength ); 
+				Log.Info(unitInfo.Health);
+				//unitInfo.Destroy();
+			}
+		}
+		_lastPunch = 0f;
+	}
 }

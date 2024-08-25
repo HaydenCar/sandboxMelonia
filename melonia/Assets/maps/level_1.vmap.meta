@@ -1,0 +1,23 @@
+{
+  "publish": {
+    "Enabled": false,
+    "ProjectConfig": {
+      "Title": "level_1",
+      "Type": "map",
+      "Org": "local",
+      "Ident": "level_1",
+      "Schema": 0,
+      "IncludeSourceFiles": false,
+      "Resources": null,
+      "PackageReferences": [],
+      "EditorReferences": [
+        "tft.mp5#56844",
+        "rust.v_rust_shotgun#43972"
+      ],
+      "IsWhitelistDisabled": false,
+      "Metadata": {
+        "SingleAssetSource": "maps/level_1.vmap"
+      }
+    }
+  }
+}

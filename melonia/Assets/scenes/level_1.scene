@@ -1,0 +1,163 @@
+{
+  "__guid": "ffab8f5d-d08f-42cc-9d4a-d9699ca3dac5",
+  "GameObjects": [
+    {
+      "__guid": "3ecc7f12-b5d9-4471-b544-21d64f1bdd6b",
+      "Flags": 0,
+      "Name": "Map",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.MapInstance",
+          "__guid": "e31c06ff-43ac-479d-b46a-37c1d00d3a14",
+          "__version": 1,
+          "EnableCollision": true,
+          "MapName": "maps/level_1.vmap",
+          "NoOrigin": false,
+          "UseMapFromLaunch": false
+        }
+      ],
+      "Children": []
+    },
+    {
+      "__guid": "fa593540-efc1-4f89-ab86-4f5fe4a0d947",
+      "Flags": 0,
+      "Name": "Sun",
+      "Rotation": "-0.0729315,0.4822396,0.1305433,0.8631827",
+      "Tags": "light_directional,light",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.DirectionalLight",
+          "__guid": "ef2a2379-77a3-443f-bee6-3d41a8ab0005",
+          "FogMode": "Enabled",
+          "FogStrength": 1,
+          "LightColor": "0.94419,0.97767,1,1",
+          "Shadows": true,
+          "SkyColor": "0.2532,0.32006,0.35349,1"
+        }
+      ]
+    },
+    {
+      "__guid": "f63c5af3-22af-48a4-abb0-40f511c5cc81",
+      "Flags": 0,
+      "Name": "2D Skybox",
+      "Tags": "skybox",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.SkyBox2D",
+          "__guid": "61647de8-9db5-49b2-b584-a867dc6662c8",
+          "SkyMaterial": "materials/skybox/skybox_day_01.vmat",
+          "Tint": "1,1,1,1"
+        },
+        {
+          "__type": "Sandbox.EnvmapProbe",
+          "__guid": "e517b18e-7efd-4a43-9d3f-3ad9500de410",
+          "Texture": "textures/cubemaps/default2.vtex",
+          "Bounds": {
+            "Mins": "-512,-512,-512",
+            "Maxs": "512,512,512"
+          },
+          "DelayBetweenUpdates": 0.1,
+          "Feathering": 0.02,
+          "FrameInterval": 5,
+          "MaxDistance": 512,
+          "Projection": "Sphere",
+          "RenderDynamically": false,
+          "TintColor": "1,1,1,1",
+          "UpdateStrategy": "OnEnabled",
+          "ZFar": 4096,
+          "ZNear": 16
+        }
+      ]
+    },
+    {
+      "__guid": "5c5cbac4-4083-4ea5-adc4-d1d2ecd3d884",
+      "Flags": 0,
+      "Name": "Player",
+      "Position": "38.91525,212.7824,4",
+      "Tags": "player,trigger",
+      "Enabled": true,
+      "__Prefab": "prefabs/player.prefab",
+      "__PrefabVariables": {}
+    },
+    {
+      "__guid": "9a4d8ce7-ca1a-4ba0-be72-6741847c8d69",
+      "Flags": 0,
+      "Name": "UI",
+      "Position": "-102.4449,-154.8557,115.6013",
+      "Enabled": true,
+      "Children": [
+        {
+          "__guid": "05ccd6f5-4f6d-4ed1-be7b-872dd3ffbf5c",
+          "Flags": 0,
+          "Name": "Main Hud",
+          "Position": "0,0,0",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "Sandbox.ScreenPanel",
+              "__guid": "0ec88626-4b4a-4b02-829e-35a43c008fe7",
+              "AutoScreenScale": true,
+              "Opacity": 1,
+              "Scale": 1,
+              "ZIndex": 100
+            },
+            {
+              "__type": "PlayerHud",
+              "__guid": "82a3b2c3-99a3-4b5e-98b3-5a5638327896"
+            }
+          ]
+        },
+        {
+          "__guid": "92e32e31-1e81-4f24-968e-6ffa512b9c68",
+          "Flags": 0,
+          "Name": "Pause Menu",
+          "Position": "0,0,0",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "Sandbox.ScreenPanel",
+              "__guid": "8dad2677-5dce-4095-b1f5-01e5c181a7fa",
+              "AutoScreenScale": true,
+              "Opacity": 1,
+              "Scale": 1,
+              "ZIndex": 50
+            },
+            {
+              "__type": "PauseMenu",
+              "__guid": "2837c765-fcb8-41d1-8df9-3ac2d987be18"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "SceneProperties": {
+    "FixedUpdateFrequency": 50,
+    "MaxFixedUpdates": 5,
+    "NetworkFrequency": 30,
+    "NetworkInterpolation": true,
+    "ThreadedAnimation": true,
+    "TimeScale": 1,
+    "UseFixedUpdate": true,
+    "NavMesh": {
+      "Enabled": false,
+      "IncludeStaticBodies": true,
+      "IncludeKeyframedBodies": true,
+      "EditorAutoUpdate": true,
+      "AgentHeight": 64,
+      "AgentRadius": 16,
+      "AgentStepSize": 18,
+      "AgentMaxSlope": 40,
+      "ExcludedBodies": "",
+      "IncludedBodies": ""
+    }
+  },
+  "Title": "level_1",
+  "Description": "",
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

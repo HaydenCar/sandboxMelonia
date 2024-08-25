@@ -1,0 +1,46 @@
+{
+  "RootObject": {
+    "__guid": "79f61365-3e5f-44f1-a8e6-418304719097",
+    "Flags": 0,
+    "Name": "enemy",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "UnitInfo",
+        "__guid": "4b816051-f687-4d9a-89b8-b252320099c1",
+        "HealthRegenAmount": 0.3,
+        "HealthRegenTimer": 5,
+        "MaxHealth": 3,
+        "Team": "Enemy"
+      },
+      {
+        "__type": "Sandbox.SphereCollider",
+        "__guid": "2cd7d6ee-1f3b-46e5-bf73-08afc26a2bdf",
+        "Center": "0,0,0",
+        "IsTrigger": false,
+        "Radius": 19.80001,
+        "Static": false
+      },
+      {
+        "__type": "Sandbox.SkinnedModelRenderer",
+        "__guid": "73ef4711-9b6d-435e-b5a8-7187137966e8",
+        "BodyGroups": 147,
+        "CreateBoneObjects": false,
+        "Model": "models/weapons/sbox_pistol_usp/v_usp.vmdl",
+        "RenderType": "On",
+        "Tint": "1,1,1,1",
+        "UseAnimGraph": true
+      }
+    ],
+    "Children": [],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__references": [
+    "facepunch.v_usp"
+  ],
+  "__version": 1
+}
