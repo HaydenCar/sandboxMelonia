@@ -65,13 +65,12 @@ public sealed class PlayerMovement : Component
 		//UpdateRoll();
 
 		if (IsSliding){
-			joe++;
-			if (joe > 200)
+			SlideTimer++;
+			if (SlideTimer > 200)
 			{
 				Input.ReleaseAction("attack2");
-				joe = -100;
 			}
-		} else joe = 0;
+		} else SlideTimer = 0;
 		
         IsSprinting = Input.Down("Run");
 		if(Input.Pressed("Jump")) Jump();

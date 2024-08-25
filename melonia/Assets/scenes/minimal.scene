@@ -130,7 +130,7 @@
                 "_type": "gameobject",
                 "go": "db0542db-500e-49b9-9984-dff5ea46df20"
               },
-              "Distance": 150.00038,
+              "Distance": 0,
               "Head": {
                 "_type": "gameobject",
                 "go": "3aeb5a9c-66ce-45c1-8ce5-d2c4648afe6c"
@@ -141,6 +141,23 @@
                 "go": "deb6fdfa-1eb8-4151-842c-b1462cd4e19a",
                 "component_type": "PlayerMovement"
               }
+            }
+          ]
+        },
+        {
+          "__guid": "018e724b-2f06-499e-9ab5-6ac20b2e24e7",
+          "Flags": 0,
+          "Name": "v_mp5",
+          "Position": "17.93598,0,48.81777",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "Sandbox.ModelRenderer",
+              "__guid": "2e683e09-098f-4a96-9278-f84ab8161318",
+              "BodyGroups": 147,
+              "Model": "models/weapons/sbox_smg_mp5/v_mp5.vmdl",
+              "RenderType": "On",
+              "Tint": "1,1,1,1"
             }
           ]
         }
@@ -718,6 +735,8 @@
   "Title": "minimal",
   "Description": "",
   "ResourceVersion": 1,
-  "__references": [],
+  "__references": [
+    "facepunch.v_mp5"
+  ],
   "__version": 1
 }
