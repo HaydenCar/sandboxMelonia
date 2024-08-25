@@ -59,18 +59,14 @@ public sealed class PlayerMovement : Component
 	}
 
 	protected override void OnUpdate(){
-		// Set our sprinting and crouching states
+		// Set movement states
         UpdateCrouch();
 		UpdateSlide();
 		//UpdateRoll();		
-		
-        IsSprinting = Input.Down("Run");
+        UpdateSprint();
 		if(Input.Pressed("Jump")) Jump();
 
-		if (Input.MouseWheel.y != 0){
-			ActiveSlot = (ActiveSlot + Math.Sign(Input.MouseWheel.y)) % Slots;
-		}
-
+		GetActiveSlot();
 		RotateBody();
 		UpdateAnimation();
 	}
@@ -185,7 +181,6 @@ public sealed class PlayerMovement : Component
 
 	void UpdateCrouch(){
         if(characterController is null) return;
-
 		if(!characterController.IsOnGround) return;
 
         if(Input.Pressed("Crouch") && !IsCrouching){
@@ -254,6 +249,16 @@ public sealed class PlayerMovement : Component
 				characterController.Height *= 2f;
 			}
 		} else SlideTimer = 0;
+	}
+
+	void GetActiveSlot(){
+		if (Input.MouseWheel.y != 0){
+			ActiveSlot = (ActiveSlot + Math.Sign(Input.MouseWheel.y)) % Slots;
+		}
+	}
+
+	void UpdateSprint(){
+		IsSprinting = Input.Down("Run");
 	}
 
 }
