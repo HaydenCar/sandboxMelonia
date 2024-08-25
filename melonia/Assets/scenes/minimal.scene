@@ -49,6 +49,7 @@
           "MaxForce": 50,
           "MaxHealth": 100,
           "RunSpeed": 290,
+          "SlideSpeed": 150,
           "Speed": 160,
           "WalkSpeed": 90
         },
@@ -666,6 +667,29 @@
           "OverrideMassCenter": false,
           "RigidbodyFlags": 0,
           "StartAsleep": false
+        }
+      ]
+    },
+    {
+      "__guid": "34440072-a938-4b79-bafa-e4e48560e7ff",
+      "Flags": 0,
+      "Name": "Spot Light",
+      "Position": "47.7981,45.39434,61.4866",
+      "Rotation": "0.1035534,0.6035534,0.07945932,0.7865661",
+      "Tags": "light_spot,light",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.SpotLight",
+          "__guid": "72b3e590-6479-42ce-a5d5-6da7fe2d9d48",
+          "Attenuation": 1,
+          "ConeInner": 15,
+          "ConeOuter": 45,
+          "FogMode": "Enabled",
+          "FogStrength": 1,
+          "LightColor": "0,0.70961,0.92558,1",
+          "Radius": 500,
+          "Shadows": true
         }
       ]
     }

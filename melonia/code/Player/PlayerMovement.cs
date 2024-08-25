@@ -27,6 +27,7 @@ public sealed class PlayerMovement : Component
 	[Property] public float RunSpeed { get; set; } = 290f;
 	[Property] public float WalkSpeed { get; set; } = 90f;
 	[Property] public float CrouchSpeed { get; set; } = 90f;
+	[Property] public float SlideSpeed { get; set; } = 150f;
 	[Property] public float JumpForce { get; set; } = 400f;
 
 	 // Object References
@@ -44,6 +45,8 @@ public sealed class PlayerMovement : Component
 	private CharacterController characterController;
 	private CitizenAnimationHelper animationHelper;
 
+	int SlideTimer = 0;
+
 	protected override void OnStart(){
 		characterController = Components.Get<CharacterController>();
 		animationHelper = Components.Get<CitizenAnimationHelper>();
@@ -60,6 +63,15 @@ public sealed class PlayerMovement : Component
         UpdateCrouch();
 		UpdateSlide();
 		//UpdateRoll();
+
+		if (IsSliding){
+			joe++;
+			if (joe > 200)
+			{
+				Input.ReleaseAction("attack2");
+				joe = -100;
+			}
+		} else joe = 0;
 		
         IsSprinting = Input.Down("Run");
 		if(Input.Pressed("Jump")) Jump();
@@ -90,7 +102,8 @@ public sealed class PlayerMovement : Component
 
         if ( !WishVelocity.IsNearZeroLength ) WishVelocity = WishVelocity.Normal;
 
-        if(IsCrouching) WishVelocity *= CrouchSpeed; // Crouching takes presedence over sprinting
+        if(IsCrouching) WishVelocity *= CrouchSpeed; // Crouching takes presedence over sliding
+		else if(IsSliding) WishVelocity *= SlideSpeed; // Sliding takes presedence over sprinting
         else if(IsSprinting) WishVelocity *= RunSpeed; // Sprinting takes presedence over walking
         else WishVelocity *= Speed;
     }
@@ -214,17 +227,16 @@ public sealed class PlayerMovement : Component
 	void UpdateSlide(){
 		if(!characterController.IsOnGround || IsCrouching) return;
 
-		IsSliding = Input.Pressed("attack2");
-
-        if (IsSliding){
+        if (Input.Pressed("attack2") && !IsSliding){
 			Log.Info("Slide in, slide in, Would you ride? Baby, would you ride with me?");
-			characterController.Height /= 2f;			
+			IsSliding = true;
+			characterController.Height /= 2f;	
         } 
 
-		if (Input.Released("attack2") && !IsSliding){
+		if (Input.Released("attack2") && IsSliding){
+			IsSliding = false;
 			characterController.Height *= 2f;
 		}
-
     }
 
 }
