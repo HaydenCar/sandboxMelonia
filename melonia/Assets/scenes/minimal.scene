@@ -49,7 +49,7 @@
           "MaxForce": 50,
           "MaxHealth": 100,
           "PunchCooldown": 0.5,
-          "PunchRange": 145,
+          "PunchRange": 155,
           "PunchStrength": 1,
           "RunSpeed": 290,
           "SlideSpeed": 150,
@@ -1540,7 +1540,7 @@
     {
       "__guid": "172fc486-0584-414e-a6a5-14a9797c2ffd",
       "Flags": 0,
-      "Name": "Object",
+      "Name": "Enemy",
       "Position": "-52.23349,79.9822,28.09697",
       "Enabled": true,
       "Components": [
@@ -1549,7 +1549,7 @@
           "__guid": "363ab131-2bc0-469b-a614-46b730994043",
           "Center": "0,0,0",
           "IsTrigger": false,
-          "Radius": 37.59999,
+          "Radius": 80.39996,
           "Static": false
         },
         {
@@ -1566,7 +1566,7 @@
           "__guid": "c42b9b90-594c-4f82-b3e6-9e90e97a566e",
           "HealthRegenAmount": 0.5,
           "HealthRegenTimer": 3,
-          "MaxHealth": 1,
+          "MaxHealth": 8,
           "Team": "Enemy"
         }
       ]

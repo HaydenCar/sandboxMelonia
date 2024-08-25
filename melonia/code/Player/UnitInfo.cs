@@ -59,7 +59,7 @@ public sealed class UnitInfo : Component
 	// <param name="damage"></param>
 	public void Damage( float damage )
 	{
-		if ( !Alive ) return;
+		if ( !Alive ) Kill();
 
 		Health = Math.Clamp( Health - damage, 0f, MaxHealth );
 

@@ -66,6 +66,7 @@ public sealed class PlayerMovement : Component
 
 	int SlideTimer = 0;
 	TimeSince _lastPunch;
+	public Angles EyeAngles { get; set; }
 
 	protected override void DrawGizmos()
 	{
@@ -92,6 +93,8 @@ public sealed class PlayerMovement : Component
 
 
 	protected override void OnUpdate(){
+		EyeAngles += Input.AnalogLook;
+		EyeAngles = EyeAngles.WithPitch( MathX.Clamp( EyeAngles.pitch, -80f, 80f ) );
 		// Set movement states
         UpdateCrouch();
 		UpdateSlide();
@@ -307,7 +310,7 @@ public sealed class PlayerMovement : Component
 		}
 
 		var punchTrace = Scene.Trace
-			.FromTo( Head.Transform.LocalPosition, Head.Transform.LocalPosition + Head.Transform.LocalRotation.Forward * PunchRange )
+			.FromTo( Head.Transform.LocalPosition, Head.Transform.LocalPosition + EyeAngles.Forward * PunchRange )
 			.Size( 10f )
 			.WithoutTags( "player" )
 			.IgnoreGameObjectHierarchy( GameObject )
@@ -318,7 +321,6 @@ public sealed class PlayerMovement : Component
 			if ( punchTrace.GameObject.Components.TryGet<UnitInfo>( out var unitInfo ) ){
 				unitInfo.Damage( PunchStrength ); 
 				Log.Info(unitInfo.Health);
-				//unitInfo.Destroy();
 			}
 		}
 		_lastPunch = 0f;
