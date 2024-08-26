@@ -95,13 +95,13 @@ public sealed class PlayerMovement : Component
         UpdateCrouch();
 		UpdateSlide();
         UpdateSprint();
+		if(Input.Pressed("Jump")) Jump();
 
 		CheckWeapon();
-		if(Input.Pressed("Jump")) Jump();
 		if ( Input.Pressed( "use" ) && _lastPunch >= PunchCooldown ) Punch();
 
 		//Get rest
-		//DrawGizmos();
+		DrawGizmos();
 		GetActiveSlot();
 		RotateBody();
 		UpdateAnimation();
@@ -237,6 +237,7 @@ public sealed class PlayerMovement : Component
 			Log.Info("Slide in, slide in, Would you ride? Baby, would you ride with me?");
 			IsSliding = true;
 			characterController.Height /= 2f;	
+			return;
         } 
 
 		if (Input.Released("attack2") && IsSliding){
@@ -249,6 +250,7 @@ public sealed class PlayerMovement : Component
 
 			IsSliding = false;
 			characterController.Height *= 2f;
+			return;
 		}
 
 		SlideFix();
@@ -333,5 +335,6 @@ public sealed class PlayerMovement : Component
 	public void CheckWeapon(){
 		if ( Input.Pressed( "attack1" ) && Gun.AmmoInClip > 0) Shoot();
 		if(Gun.AmmoInClip == 0) Reload();
+		if(Input.Pressed("reload") && Gun.AmmoInClip != Gun.MaxAmmo) Reload();
 	}
 }
