@@ -36,7 +36,7 @@
 				{
 					_class = "CSequenceAnimNode"
 					m_sName = "a_idle"
-					m_vecPosition = [ -320.0, -48.0 ]
+					m_vecPosition = [ -336.0, -48.0 ]
 					m_nNodeID = 
 					{
 						m_id = 765072428
@@ -57,7 +57,7 @@
 				{
 					_class = "CSpeedScaleAnimNode"
 					m_sName = "reloadspeed"
-					m_vecPosition = [ -144.0, -176.0 ]
+					m_vecPosition = [ -144.0, -192.0 ]
 					m_nNodeID = 
 					{
 						m_id = 1269655610
@@ -481,7 +481,7 @@
 				{
 					_class = "CSequenceAnimNode"
 					m_sName = "a_reload"
-					m_vecPosition = [ -320.0, -192.0 ]
+					m_vecPosition = [ -320.0, -208.0 ]
 					m_nNodeID = 
 					{
 						m_id = 1819290120

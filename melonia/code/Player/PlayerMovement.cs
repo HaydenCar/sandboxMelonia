@@ -7,6 +7,7 @@ public sealed class PlayerMovement : Component
 {
 	// Variables
 	[Property] public CameraMovement CameraM { get; set; }
+	[Property] public PlayerWeapons Gun { get; set; }
 	[Property] public float Health { get; set; } = 100f;
 	[Property] public float MaxHealth { get; set; } = 100f;
 	public TimeSince TimeAlive { get; set; } = 0f;
@@ -65,8 +66,9 @@ public sealed class PlayerMovement : Component
 	private CharacterController characterController;
 	private CitizenAnimationHelper animationHelper;
 
-	private int SlideTimer = 0;
+	private TimeSince SlideTimer;
 	private TimeSince _lastPunch;
+	private TimeSince _lastShot;
 
 	//FOR TRACING ATTACKS
 	public Vector3 EyeWorldPosition => Transform.Local.PointToWorld( CameraM.EyePosition );
@@ -104,6 +106,7 @@ public sealed class PlayerMovement : Component
 
 		if(Input.Pressed("Jump")) Jump();
 		if ( Input.Pressed( "attack1" ) && _lastPunch >= PunchCooldown ) Punch();
+		CheckWeapon();
 
 		//Get rest
 		DrawGizmos();
@@ -285,8 +288,7 @@ public sealed class PlayerMovement : Component
 	void SlideFix(){
 		if (IsSliding){
 			var hi = characterController.TraceDirection( Vector3.Up * 32);
-			SlideTimer++;
-			if (SlideTimer > 200 && !hi.Hit)
+			if (SlideTimer > 1 && !hi.Hit)
 			{
 				IsSliding = false;
 				characterController.Height *= 2f;
@@ -327,5 +329,39 @@ public sealed class PlayerMovement : Component
 			}
 		}
 		_lastPunch = 0f;
+	}
+
+	public void Shoot(){
+		if ( _lastShot < 0.5f ) return;
+
+		Gun.ShootAnim();
+
+		var shootTrace = Scene.Trace
+			.FromTo( EyeWorldPosition, EyeWorldPosition + CameraM.EyeAngles.Forward * 1000f )
+			.Size( 5f )
+			.WithoutTags( "player")
+			.IgnoreGameObjectHierarchy( GameObject )
+			.Run();
+
+		if ( shootTrace.Hit ){
+			if ( shootTrace.GameObject.Components.TryGet<UnitInfo>( out var unitInfo ) ){
+				unitInfo.Damage( Gun.BulletDamage ); 
+				Log.Info("Health: " + unitInfo.Health);
+				_lastShot = 0f;
+			}
+		}
+
+		Gun.AmmoInClip -= 1f;
+	}
+
+	public void Reload(){
+		Gun.AmmoInClip = Gun.MaxAmmo;
+		_lastShot = -2f;
+		Gun.ReloadAnim();
+	}
+
+	public void CheckWeapon(){
+		if ( Input.Pressed( "use" ) && Gun.AmmoInClip > 0) Shoot();
+		if(Gun.AmmoInClip == 0) Reload();
 	}
 }

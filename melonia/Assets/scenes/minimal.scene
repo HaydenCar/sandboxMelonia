@@ -42,6 +42,12 @@
           },
           "CrouchSpeed": 90,
           "GroundControl": 4,
+          "Gun": {
+            "_type": "component",
+            "component_id": "dae311f1-d19d-433a-a195-352cdc8024a7",
+            "go": "deb6fdfa-1eb8-4151-842c-b1462cd4e19a",
+            "component_type": "PlayerWeapons"
+          },
           "Head": {
             "_type": "gameobject",
             "go": "3aeb5a9c-66ce-45c1-8ce5-d2c4648afe6c"
