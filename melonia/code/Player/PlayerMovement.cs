@@ -64,9 +64,12 @@ public sealed class PlayerMovement : Component
 	private CharacterController characterController;
 	private CitizenAnimationHelper animationHelper;
 
-	int SlideTimer = 0;
-	TimeSince _lastPunch;
+	private int SlideTimer = 0;
+	private TimeSince _lastPunch;
+
+	//FOR TRACING ATTACKS
 	public Angles EyeAngles { get; set; }
+	public Vector3 EyeWorldPosition => Transform.Local.PointToWorld( Head.Transform.LocalPosition );
 
 	protected override void DrawGizmos()
 	{
@@ -102,7 +105,6 @@ public sealed class PlayerMovement : Component
         UpdateSprint();
 		if(Input.Pressed("Jump")) Jump();
 		if ( Input.Pressed( "attack1" ) && _lastPunch >= PunchCooldown ) Punch();
-		if ( _lastPunch >= 2f ) animationHelper.HoldType = CitizenAnimationHelper.HoldTypes.None;
 		DrawGizmos();
 		GetActiveSlot();
 		RotateBody();
@@ -310,9 +312,9 @@ public sealed class PlayerMovement : Component
 		}
 
 		var punchTrace = Scene.Trace
-			.FromTo( Head.Transform.LocalPosition, Head.Transform.LocalPosition + EyeAngles.Forward * PunchRange )
-			.Size( 10f )
-			.WithoutTags( "player" )
+			.FromTo( EyeWorldPosition, EyeWorldPosition + EyeAngles.Forward * PunchRange )
+			.Size( 20f )
+			.WithoutTags( "player")
 			.IgnoreGameObjectHierarchy( GameObject )
 			.Run();
 
