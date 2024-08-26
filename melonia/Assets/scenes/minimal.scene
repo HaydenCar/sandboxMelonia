@@ -87,6 +87,22 @@
           "HealthRegenTimer": 3,
           "MaxHealth": 10,
           "Team": "Player"
+        },
+        {
+          "__type": "PlayerWeapons",
+          "__guid": "dae311f1-d19d-433a-a195-352cdc8024a7",
+          "Gun": {
+            "_type": "component",
+            "component_id": "1d3d0b6d-aa59-43f5-b564-e272794b91f3",
+            "go": "edc1bc1d-644c-4e9c-b832-53dfc06a07d7",
+            "component_type": "SkinnedModelRenderer"
+          },
+          "Info": {
+            "_type": "component",
+            "component_id": "9da7011a-be1c-4699-8e67-4b05a70c5e37",
+            "go": "deb6fdfa-1eb8-4151-842c-b1462cd4e19a",
+            "component_type": "UnitInfo"
+          }
         }
       ],
       "Children": [
@@ -980,7 +996,7 @@
                 "_type": "gameobject",
                 "go": "db0542db-500e-49b9-9984-dff5ea46df20"
               },
-              "Distance": 150,
+              "Distance": 0,
               "EyePosition": "0,0,61.99979",
               "Head": {
                 "_type": "gameobject",
@@ -992,6 +1008,28 @@
                 "go": "deb6fdfa-1eb8-4151-842c-b1462cd4e19a",
                 "component_type": "PlayerMovement"
               }
+            }
+          ],
+          "Children": [
+            {
+              "__guid": "edc1bc1d-644c-4e9c-b832-53dfc06a07d7",
+              "Flags": 0,
+              "Name": "v_rust_pistol",
+              "Position": "34.13099,-0.2457275,-3.409382",
+              "Enabled": true,
+              "Components": [
+                {
+                  "__type": "Sandbox.SkinnedModelRenderer",
+                  "__guid": "1d3d0b6d-aa59-43f5-b564-e272794b91f3",
+                  "AnimationGraph": "animgraphs/weapons/v_magnum.vanmgrph",
+                  "BodyGroups": 18446744073709551615,
+                  "CreateBoneObjects": false,
+                  "Model": "weapons/rust_pistol/v_rust_pistol.vmdl",
+                  "RenderType": "On",
+                  "Tint": "1,1,1,1",
+                  "UseAnimGraph": true
+                }
+              ]
             }
           ]
         }
@@ -1612,6 +1650,8 @@
   "Title": "minimal",
   "Description": "",
   "ResourceVersion": 1,
-  "__references": [],
+  "__references": [
+    "rust.v_rust_pistol"
+  ],
   "__version": 1
 }

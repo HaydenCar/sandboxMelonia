@@ -197,7 +197,7 @@ public sealed class PlayerMovement : Component
 		Log.Info("Jump Count: " + JumpCount);
     }
 
-	  void UpdateAnimation(){
+	void UpdateAnimation(){
         if(animationHelper is null) return;
 
         animationHelper.WithWishVelocity(WishVelocity);
