@@ -98,7 +98,7 @@ public sealed class PlayerMovement : Component
 
 		CheckWeapon();
 		if(Input.Pressed("Jump")) Jump();
-		if ( Input.Pressed( "attack1" ) && _lastPunch >= PunchCooldown ) Punch();
+		if ( Input.Pressed( "use" ) && _lastPunch >= PunchCooldown ) Punch();
 
 		//Get rest
 		//DrawGizmos();

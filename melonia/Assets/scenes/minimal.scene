@@ -124,7 +124,7 @@
               "BodyGroups": 341,
               "CreateBoneObjects": true,
               "Model": "models/citizen/citizen.vmdl",
-              "RenderType": "On",
+              "RenderType": "ShadowsOnly",
               "Tint": "1,1,1,1",
               "UseAnimGraph": true
             }
@@ -1021,7 +1021,7 @@
               "__guid": "edc1bc1d-644c-4e9c-b832-53dfc06a07d7",
               "Flags": 0,
               "Name": "v_rust_pistol",
-              "Position": "2.23098,-0.2457275,7.810631",
+              "Position": "2.23098,-0.2457275,0.5929642",
               "Enabled": true,
               "Components": [
                 {
