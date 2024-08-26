@@ -13,6 +13,8 @@ public sealed class CameraMovement : Component
     private CameraComponent Camera;
     private ModelRenderer BodyRenderer;
 	private Vector3 CurrentOffset = Vector3.Zero;
+    public Angles EyeAngles;
+    [Property] public Vector3 EyePosition { get; set; } 
 
     protected override void OnAwake()
     {
@@ -69,7 +71,6 @@ public sealed class CameraMovement : Component
             Camera.Transform.Position = camPos;
             Camera.Transform.Rotation = eyeAngles.ToRotation();
         }
+        EyeAngles = eyeAngles;
 	}
-
-	
 }

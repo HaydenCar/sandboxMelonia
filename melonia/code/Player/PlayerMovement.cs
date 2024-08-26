@@ -1,4 +1,4 @@
-using Microsoft.VisualBasic;
+//using Microsoft.VisualBasic;
 using Sandbox;
 using Sandbox.Citizen;
 
@@ -6,6 +6,7 @@ using Sandbox.Citizen;
 public sealed class PlayerMovement : Component
 {
 	// Variables
+	[Property] public CameraMovement CameraM { get; set; }
 	[Property] public float Health { get; set; } = 100f;
 	[Property] public float MaxHealth { get; set; } = 100f;
 	public TimeSince TimeAlive { get; set; } = 0f;
@@ -16,7 +17,7 @@ public sealed class PlayerMovement : Component
 	};
 
 	public int ActiveSlot = 0;
-	public int Slots => 9;
+	public int Slots => Inventory.Count;
 
 	private int JumpCount = 0;
 
@@ -68,8 +69,7 @@ public sealed class PlayerMovement : Component
 	private TimeSince _lastPunch;
 
 	//FOR TRACING ATTACKS
-	public Angles EyeAngles { get; set; }
-	public Vector3 EyeWorldPosition => Transform.Local.PointToWorld( Head.Transform.LocalPosition );
+	public Vector3 EyeWorldPosition => Transform.Local.PointToWorld( CameraM.EyePosition );
 
 	protected override void DrawGizmos()
 	{
@@ -77,8 +77,8 @@ public sealed class PlayerMovement : Component
 
 		var draw = Gizmo.Draw;
 
-		draw.LineSphere( Head.Transform.LocalPosition, 10f );
-		draw.LineCylinder(Head.Transform.LocalPosition, Head.Transform.LocalPosition + Head.Transform.LocalRotation.Forward * PunchRange, 5f, 5f, 10 );
+		draw.LineSphere( CameraM.EyePosition, 10f );
+		draw.LineCylinder(CameraM.EyePosition, CameraM.EyePosition + Head.Transform.LocalRotation.Forward * PunchRange, 5f, 5f, 10 );
 	}
 
 
@@ -96,20 +96,20 @@ public sealed class PlayerMovement : Component
 
 
 	protected override void OnUpdate(){
-		EyeAngles += Input.AnalogLook;
-		EyeAngles = EyeAngles.WithPitch( MathX.Clamp( EyeAngles.pitch, -80f, 80f ) );
 		// Set movement states
         UpdateCrouch();
 		UpdateSlide();
 		//UpdateRoll();		
         UpdateSprint();
+
 		if(Input.Pressed("Jump")) Jump();
 		if ( Input.Pressed( "attack1" ) && _lastPunch >= PunchCooldown ) Punch();
+
+		//Get rest
 		DrawGizmos();
 		GetActiveSlot();
 		RotateBody();
 		UpdateAnimation();
-
 	}
 
 	protected override void OnFixedUpdate(){
@@ -217,6 +217,8 @@ public sealed class PlayerMovement : Component
 		if(IsSliding){
 			animationHelper.SpecialMove = CitizenAnimationHelper.SpecialMoveStyle.Slide;
 		} else animationHelper.SpecialMove = CitizenAnimationHelper.SpecialMoveStyle.None;
+
+		if ( _lastPunch >= 2f ) animationHelper.HoldType = CitizenAnimationHelper.HoldTypes.None;
 		
     }
 
@@ -312,17 +314,16 @@ public sealed class PlayerMovement : Component
 		}
 
 		var punchTrace = Scene.Trace
-			.FromTo( EyeWorldPosition, EyeWorldPosition + EyeAngles.Forward * PunchRange )
-			.Size( 20f )
+			.FromTo( EyeWorldPosition, EyeWorldPosition + CameraM.EyeAngles.Forward * PunchRange )
+			.Size( 5f )
 			.WithoutTags( "player")
 			.IgnoreGameObjectHierarchy( GameObject )
 			.Run();
 
 		if ( punchTrace.Hit ){
-			Log.Info("WHY");
 			if ( punchTrace.GameObject.Components.TryGet<UnitInfo>( out var unitInfo ) ){
 				unitInfo.Damage( PunchStrength ); 
-				Log.Info(unitInfo.Health);
+				Log.Info("Health: " + unitInfo.Health);
 			}
 		}
 		_lastPunch = 0f;
