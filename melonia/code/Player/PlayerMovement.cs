@@ -87,13 +87,6 @@ public sealed class PlayerMovement : Component
 	protected override void OnStart(){
 		characterController = Components.Get<CharacterController>();
 		animationHelper = Components.Get<CitizenAnimationHelper>();
-
-		// FOR SOME REASON GAME WANNA BE NAKED
-		if (Components.TryGet<SkinnedModelRenderer>(out var model)) {
-    		var clothing = ClothingContainer.CreateFromLocalUser();
-    		clothing.Apply(model);
-			Log.Info("DO I WORK?");
-		}
 	}
 
 
@@ -101,15 +94,14 @@ public sealed class PlayerMovement : Component
 		// Set movement states
         UpdateCrouch();
 		UpdateSlide();
-		//UpdateRoll();		
         UpdateSprint();
 
+		CheckWeapon();
 		if(Input.Pressed("Jump")) Jump();
 		if ( Input.Pressed( "attack1" ) && _lastPunch >= PunchCooldown ) Punch();
-		CheckWeapon();
 
 		//Get rest
-		DrawGizmos();
+		//DrawGizmos();
 		GetActiveSlot();
 		RotateBody();
 		UpdateAnimation();
@@ -210,12 +202,6 @@ public sealed class PlayerMovement : Component
         animationHelper.WithLook(Head.Transform.Rotation.Forward, 1, 0.75f, 0.5f);
         animationHelper.MoveStyle = CitizenAnimationHelper.MoveStyles.Run;
         animationHelper.DuckLevel = IsCrouching ? 1f : 0f;
-		
-		//NOT IN USE RIGHT NOW TBA
-		//if(IsRolling){
-		//	animationHelper.Target.Set( "roll_forward", true );
-		//	animationHelper.SpecialMove = CitizenAnimationHelper.SpecialMoveStyle.Roll;
-		//} else animationHelper.SpecialMove = CitizenAnimationHelper.SpecialMoveStyle.None;
 
 		if(IsSliding){
 			animationHelper.SpecialMove = CitizenAnimationHelper.SpecialMoveStyle.Slide;
@@ -243,22 +229,6 @@ public sealed class PlayerMovement : Component
             characterController.Height *= 1.5f; // Return the height of our character controller to normal
         }
     }
-
-	//NOT IN USE RIGHT NOW TBA ALSO BAD CODE FIX
-	//void UpdateRoll(){
-	//	if(!characterController.IsOnGround) return;
-	//	if(IsCrouching) return;
-//
-    //    if(Input.Pressed("attack1"))
-    //    {
-	//		Log.Info("DO A BARREL ROLL");
-	//		animationHelper.Target.Set( "roll_forward", true );
-	//		IsRolling = true;
-    //    } else{
-	//		animationHelper.Target.Set( "roll_forward", true );
-	//		IsRolling = false;
-	//	  } 
-    //}
 
 	void UpdateSlide(){
 		if(!characterController.IsOnGround || IsCrouching) return;
@@ -332,7 +302,7 @@ public sealed class PlayerMovement : Component
 	}
 
 	public void Shoot(){
-		if ( _lastShot < 0.5f ) return;
+		if ( _lastShot < 0.3f ) return;
 
 		Gun.ShootAnim();
 
@@ -361,7 +331,7 @@ public sealed class PlayerMovement : Component
 	}
 
 	public void CheckWeapon(){
-		if ( Input.Pressed( "use" ) && Gun.AmmoInClip > 0) Shoot();
+		if ( Input.Pressed( "attack1" ) && Gun.AmmoInClip > 0) Shoot();
 		if(Gun.AmmoInClip == 0) Reload();
 	}
 }

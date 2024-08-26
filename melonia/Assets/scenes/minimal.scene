@@ -97,17 +97,17 @@
         {
           "__type": "PlayerWeapons",
           "__guid": "dae311f1-d19d-433a-a195-352cdc8024a7",
+          "Camera": {
+            "_type": "component",
+            "component_id": "c81cff2e-20d1-4620-88ac-9d3efe73f82a",
+            "go": "07c38c2d-7fd1-46fd-850d-31e7e5bd982c",
+            "component_type": "CameraMovement"
+          },
           "Gun": {
             "_type": "component",
             "component_id": "1d3d0b6d-aa59-43f5-b564-e272794b91f3",
             "go": "edc1bc1d-644c-4e9c-b832-53dfc06a07d7",
             "component_type": "SkinnedModelRenderer"
-          },
-          "Info": {
-            "_type": "component",
-            "component_id": "9da7011a-be1c-4699-8e67-4b05a70c5e37",
-            "go": "deb6fdfa-1eb8-4151-842c-b1462cd4e19a",
-            "component_type": "UnitInfo"
           }
         }
       ],
@@ -1021,7 +1021,7 @@
               "__guid": "edc1bc1d-644c-4e9c-b832-53dfc06a07d7",
               "Flags": 0,
               "Name": "v_rust_pistol",
-              "Position": "34.13099,-0.2457275,-3.409382",
+              "Position": "2.23098,-0.2457275,7.810631",
               "Enabled": true,
               "Components": [
                 {
@@ -1162,7 +1162,7 @@
           "__type": "Sandbox.ModelRenderer",
           "__guid": "e36262df-a87b-45a6-946b-3f004ac89c4e",
           "BodyGroups": 18446744073709551615,
-          "MaterialOverride": "materials/default.vmat",
+          "MaterialOverride": "materials/4_grass.vmat",
           "Model": "models/dev/plane.vmdl",
           "RenderType": "On",
           "Tint": "0.39546,0.51163,0.27128,1"
@@ -1601,17 +1601,9 @@
       "__guid": "172fc486-0584-414e-a6a5-14a9797c2ffd",
       "Flags": 0,
       "Name": "Enemy",
-      "Position": "-52.23349,79.9822,28.09697",
+      "Position": "-52.23349,212.5705,118.0601",
       "Enabled": true,
       "Components": [
-        {
-          "__type": "Sandbox.SphereCollider",
-          "__guid": "363ab131-2bc0-469b-a614-46b730994043",
-          "Center": "0,0,0",
-          "IsTrigger": false,
-          "Radius": 80.39996,
-          "Static": false
-        },
         {
           "__type": "Sandbox.SkinnedModelRenderer",
           "__guid": "dae20a41-0d61-481d-80d4-be27b0415755",
@@ -1628,6 +1620,14 @@
           "HealthRegenTimer": 3,
           "MaxHealth": 8,
           "Team": "Enemy"
+        },
+        {
+          "__type": "Sandbox.BoxCollider",
+          "__guid": "97be11d2-16e6-4d5b-95aa-fffde331e14f",
+          "Center": "0,0,0",
+          "IsTrigger": false,
+          "Scale": "50,50,50",
+          "Static": false
         }
       ]
     }
@@ -1657,6 +1657,7 @@
   "Description": "",
   "ResourceVersion": 1,
   "__references": [
+    "rust.4_grass",
     "rust.v_rust_pistol"
   ],
   "__version": 1

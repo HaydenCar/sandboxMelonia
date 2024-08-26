@@ -2,7 +2,6 @@ using Sandbox;
 
 public sealed class PlayerWeapons : Component
 {
-	[Property] public UnitInfo Info {get; set;}
 	[Property] public SkinnedModelRenderer Gun {get; set;}
 	[Property] public CameraMovement Camera {get; set;}
 
@@ -28,7 +27,8 @@ public sealed class PlayerWeapons : Component
 	}
 
 	//works if use any other animation?????????
-	public void ReloadAnim(){
+	public async void ReloadAnim(){
+		await Task.DelaySeconds(0.1f);
 		Gun.Set("reload" , true);
 		Log.Info("RELOADING");
 	}
