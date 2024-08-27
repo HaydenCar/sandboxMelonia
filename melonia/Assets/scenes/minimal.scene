@@ -108,7 +108,14 @@
             "component_id": "1d3d0b6d-aa59-43f5-b564-e272794b91f3",
             "go": "edc1bc1d-644c-4e9c-b832-53dfc06a07d7",
             "component_type": "SkinnedModelRenderer"
-          }
+          },
+          "Player": {
+            "_type": "component",
+            "component_id": "bb580e66-cecf-4079-8e24-2170ce8b1d23",
+            "go": "deb6fdfa-1eb8-4151-842c-b1462cd4e19a",
+            "component_type": "PlayerMovement"
+          },
+          "TypeOfGun": "Hands"
         }
       ],
       "Children": [

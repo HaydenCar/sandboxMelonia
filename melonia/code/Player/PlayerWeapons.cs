@@ -1,11 +1,27 @@
 using Sandbox;
 
+public enum GunType{
+	// Environmental units or resources
+	[Icon( "handshake" )]
+	Hands,
+	[Icon( "minimize" )]
+	Pistol,
+	[Icon( "drag_handle" )]
+	Shotgun,
+	[Icon( "dehaze" )]
+	Assault_Rifle
+}
+
 public sealed class PlayerWeapons : Component
 {
+	[Property] public GunType TypeOfGun { get; set; }
+
 	//GRAB CLASS REFERENCES
 	[Property] public SkinnedModelRenderer Pistol {get; set;}
+	[Property] public SkinnedModelRenderer Shotgun {get; set;}
+	[Property] public SkinnedModelRenderer AssaultRifle {get; set;}
 	[Property] public CameraMovement Camera {get; set;}
-	public PlayerMovement Player {get; set;}
+	[Property] public PlayerMovement Player {get; set;}
 
 	
 	//CREATE VARIABLES
@@ -16,15 +32,28 @@ public sealed class PlayerWeapons : Component
 	private TimeSince _pistollastShot;
 	public Vector3 EyeWorldPosition => Transform.Local.PointToWorld( Camera.EyePosition );
 
-
 	protected override void OnStart()
 	{
 		if (Pistol != null){
 			Log.Info(Pistol);
+			Log.Info(Player.ActiveSlot);
+			Pistol.Enabled = false;
 		}
 	}
 
 	protected override void OnUpdate(){
+	
+	}
+
+	public void ChooseWeapon(){
+		if (Player.ActiveSlot == 0) Pistol.Enabled = false;
+		if (Player.ActiveSlot == 1) {
+			Pistol.Enabled = true;
+			Pistol.Set("reloading", false);
+			Pistol.Set("fire", false);
+			Pistol.Set("deploy", true);
+			Log.Info(Player.ActiveSlot);
+		}
 	}
 
 	public void ShootAnim(){
@@ -40,6 +69,7 @@ public sealed class PlayerWeapons : Component
 
 	//HEAVYLIFTING
 	public void Shoot(){
+		if (!Pistol.Enabled) return; 
 		if ( _pistollastShot < 0.3f ) return;
 
 		ShootAnim();
@@ -69,7 +99,7 @@ public sealed class PlayerWeapons : Component
 
 	public void Reload(){
 		AmmoInClip = MaxAmmoInClip;
-		_pistollastShot = -2f;
+		_pistollastShot = -3.2f;
 		ReloadAnim();
 	}
 }

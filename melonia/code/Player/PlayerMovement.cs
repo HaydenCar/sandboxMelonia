@@ -17,7 +17,7 @@ public sealed class PlayerMovement : Component
 		"Weapon_Pistol"
 	};
 
-	public int ActiveSlot = 0;
+	public int ActiveSlot {get; set;} = 0;
 	public int Slots => Inventory.Count;
 
 	private int JumpCount = 0;
@@ -98,8 +98,10 @@ public sealed class PlayerMovement : Component
 
 		if(Input.Pressed("attack1")) Gun.CheckWeapon();
 		if(Input.Pressed("reload") && Gun.AmmoInClip != Gun.MaxAmmoInClip) Gun.Reload();
-		
+
 		if ( Input.Pressed( "use" ) && _lastPunch >= PunchCooldown ) Punch();
+
+		if (Input.MouseWheel.y != 0) Gun.ChooseWeapon();
 
 		//Get rest
 		DrawGizmos();

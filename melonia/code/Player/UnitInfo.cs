@@ -1,7 +1,6 @@
 using Sandbox;
 
-public enum UnitType
-{
+public enum UnitType{
 	// Environmental units or resources
 	[Icon( "check_box_outline_blank" )]
 	None,
