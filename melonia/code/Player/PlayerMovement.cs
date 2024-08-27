@@ -68,7 +68,6 @@ public sealed class PlayerMovement : Component
 
 	private TimeSince SlideTimer;
 	private TimeSince _lastPunch;
-	private TimeSince _lastShot;
 
 	//FOR TRACING ATTACKS
 	public Vector3 EyeWorldPosition => Transform.Local.PointToWorld( CameraM.EyePosition );
@@ -97,7 +96,9 @@ public sealed class PlayerMovement : Component
         UpdateSprint();
 		if(Input.Pressed("Jump")) Jump();
 
-		CheckWeapon();
+		if(Input.Pressed("attack1")) Gun.CheckWeapon();
+		if(Input.Pressed("reload") && Gun.AmmoInClip != Gun.MaxAmmoInClip) Gun.Reload();
+		
 		if ( Input.Pressed( "use" ) && _lastPunch >= PunchCooldown ) Punch();
 
 		//Get rest
@@ -301,40 +302,5 @@ public sealed class PlayerMovement : Component
 			}
 		}
 		_lastPunch = 0f;
-	}
-
-	public void Shoot(){
-		if ( _lastShot < 0.3f ) return;
-
-		Gun.ShootAnim();
-
-		var shootTrace = Scene.Trace
-			.FromTo( EyeWorldPosition, EyeWorldPosition + CameraM.EyeAngles.Forward * 1000f )
-			.Size( 5f )
-			.WithoutTags( "player")
-			.IgnoreGameObjectHierarchy( GameObject )
-			.Run();
-
-		if ( shootTrace.Hit ){
-			if ( shootTrace.GameObject.Components.TryGet<UnitInfo>( out var unitInfo ) ){
-				unitInfo.Damage( Gun.BulletDamage ); 
-				Log.Info("Health: " + unitInfo.Health);
-				_lastShot = 0f;
-			}
-		}
-
-		Gun.AmmoInClip -= 1f;
-	}
-
-	public void Reload(){
-		Gun.AmmoInClip = Gun.MaxAmmo;
-		_lastShot = -2f;
-		Gun.ReloadAnim();
-	}
-
-	public void CheckWeapon(){
-		if ( Input.Pressed( "attack1" ) && Gun.AmmoInClip > 0) Shoot();
-		if(Gun.AmmoInClip == 0) Reload();
-		if(Input.Pressed("reload") && Gun.AmmoInClip != Gun.MaxAmmo) Reload();
 	}
 }
