@@ -1044,6 +1044,26 @@
                   "UseAnimGraph": true
                 }
               ]
+            },
+            {
+              "__guid": "029ec7e0-61da-4da5-87bd-e355c113b3b1",
+              "Flags": 0,
+              "Name": "v_rust_shotgun",
+              "Position": "30.79996,0,-42.30001",
+              "Enabled": true,
+              "Components": [
+                {
+                  "__type": "Sandbox.SkinnedModelRenderer",
+                  "__guid": "04bdd2ec-5209-48e4-9d22-01f5694ab259",
+                  "AnimationGraph": "animgraphs/weapons/v_rust_shotgun.vanmgrph",
+                  "BodyGroups": 18446744073709551615,
+                  "CreateBoneObjects": false,
+                  "Model": "weapons/rust_shotgun/v_rust_shotgun.vmdl",
+                  "RenderType": "On",
+                  "Tint": "1,1,1,1",
+                  "UseAnimGraph": true
+                }
+              ]
             }
           ]
         }
@@ -1700,7 +1720,8 @@
   "ResourceVersion": 1,
   "__references": [
     "rust.4_grass",
-    "rust.v_rust_pistol"
+    "rust.v_rust_pistol",
+    "rust.v_rust_shotgun"
   ],
   "__version": 1
 }

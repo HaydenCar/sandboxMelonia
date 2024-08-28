@@ -38,6 +38,7 @@ public sealed class PlayerWeapons : Component
 			Log.Info(Pistol);
 			Log.Info(Player.ActiveSlot);
 			Pistol.Enabled = false;
+			Player.Inventory.Add(Pistol.ToString());
 		}
 	}
 
@@ -46,7 +47,7 @@ public sealed class PlayerWeapons : Component
 	}
 
 	public void ChooseWeapon(){
-		if (Player.ActiveSlot == 0) Pistol.Enabled = false;
+		if (Player.ActiveSlot != 0) Pistol.Enabled = false;
 		if (Player.ActiveSlot == 1) {
 			Pistol.Enabled = true;
 			Pistol.Set("reloading", false);

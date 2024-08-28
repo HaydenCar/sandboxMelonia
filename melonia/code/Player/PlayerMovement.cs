@@ -101,7 +101,7 @@ public sealed class PlayerMovement : Component
 
 		if ( Input.Pressed( "use" ) && _lastPunch >= PunchCooldown ) Punch();
 
-		if (Input.MouseWheel.y != 0) Gun.ChooseWeapon();
+		if (Input.MouseWheel.y != 0 || Input.MouseWheel.x != 0 ) Gun.ChooseWeapon();
 
 		//Get rest
 		DrawGizmos();
